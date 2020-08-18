@@ -12,11 +12,11 @@ module Api::V1
     end
 
     def search_params
-      permited_params.merge!(defaulted_params)
+      defaulted_params.merge(permited_params)
     end
 
     def permited_params
-      params.permit(:page, :per_page, :sort, :order, :user)
+      params.permit(:sort, :order, :user)
     end
 
     def defaulted_params
