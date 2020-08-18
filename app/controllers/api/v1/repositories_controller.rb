@@ -2,13 +2,13 @@ module Api::V1
   class RepositoriesController < ApplicationController
 
     def index
-      render json: collection, status: :ok
+      render json: repositories_response.body, status: repositories_response.status
     end
 
     private
 
-    def collection
-      @collection ||= Repositories::ApiSearcher.new(search_params).call
+    def repositories_response
+      @repositories_response ||= Repositories::ApiSearcher.new(search_params).call
     end
 
     def search_params

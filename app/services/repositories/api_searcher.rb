@@ -7,7 +7,7 @@ module Repositories
 
     def call
       result.tap do |result|
-        result.merge!(errors) if error?
+        result.body.merge!(errors) if error?
       end
     end
 
@@ -16,17 +16,20 @@ module Repositories
     attr_reader :params
 
     def result
-      {
-        total: body.dig('total_count'),
-        items: items
-      }
+      OpenStruct.new(
+        body: {
+          total: response_body.dig('total_count').to_i,
+          data: items
+        },
+        status: status
+      )
     end
 
     def response
       @response ||= Github::Repositories::Search::Request.new(params).call
     end
 
-    def body
+    def response_body
       @body ||= JSON.parse(response.body)
     end
 
@@ -35,7 +38,7 @@ module Repositories
     end
 
     def items
-      items = body.dig('items') || []
+      items = response_body.dig('items') || []
 
       items.map { |item| item.slice('full_name', 'description', 'forks_count', 'stargazers_count') }
     end
@@ -45,7 +48,10 @@ module Repositories
     end
 
     def errors
-      { errors: { status: response["status"], message: response["message"] } }
+      { 
+        errors: response_body['errors'],
+        message: response_body['message']
+      }
     end
   end
 end
