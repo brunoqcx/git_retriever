@@ -3,9 +3,7 @@ module Github
     module Search
       class QueryParser
 
-        DEFAULT_LANGUAGE = 'ruby'
-
-        def initialize(q:, language: 'ruby', per_page: 1, page: 1, sort: 'stars', order: 'desc')
+        def initialize(q: nil, language: nil, per_page: nil, page: nil, sort: nil, order: nil)
           @q = q
           @language = language
           @per_page = per_page
@@ -15,13 +13,18 @@ module Github
         end
 
         def call
-          search
+          query_string
         end
 
         private
 
-        def search
-          "q=#{q}+language:#{language}$sort=#{sort}&order=#{order}&page=#{page}&per_page=#{per_page}"
+        def query_string
+          "q=#{q}".tap do |query_string|
+            query_string.concat("+language:#{language}") if language
+            query_string.concat("#{query_string}&order=#{order}") if order
+            query_string.concat("#{query_string}&page=#{page}") if page
+            query_string.concat("#{query_string}&per_page=#{per_page}") if per_page
+          end
         end
 
         attr_reader :q, :language, :per_page, :page, :sort, :order

@@ -2,7 +2,7 @@ module Repositories
   class ApiSearcher
 
     def initialize(params = {})
-      @params = params
+      @params = params.to_h.symbolize_keys
     end
 
     def call
@@ -17,7 +17,6 @@ module Repositories
 
     def result
       {
-        status: status,
         total: body.dig('total_count'),
         items: items
       }
