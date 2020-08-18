@@ -16,7 +16,7 @@ module Api::V1
     end
 
     def permited_params
-      params.permit(:page, :per_page, :sort, :order)
+      params.permit(:page, :per_page, :sort, :order, :user)
     end
 
     def defaulted_params

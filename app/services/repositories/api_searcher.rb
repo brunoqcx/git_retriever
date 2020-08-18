@@ -18,8 +18,8 @@ module Repositories
     def result
       OpenStruct.new(
         body: {
-          total: response_body.dig('total_count').to_i,
-          data: items
+          total: response_body[:total_count].to_i,
+          items: items
         },
         status: status
       )
@@ -30,7 +30,7 @@ module Repositories
     end
 
     def response_body
-      @body ||= JSON.parse(response.body)
+      @body ||= JSON.parse(response.body).deep_symbolize_keys
     end
 
     def status
@@ -38,9 +38,7 @@ module Repositories
     end
 
     def items
-      items = response_body.dig('items') || []
-
-      items.map { |item| item.slice('full_name', 'description', 'forks_count', 'stargazers_count') }
+      CollectionBuilder.new(response_body[:items]).call
     end
 
     def error?
@@ -49,8 +47,8 @@ module Repositories
 
     def errors
       { 
-        errors: response_body['errors'],
-        message: response_body['message']
+        errors: response_body[:errors],
+        message: response_body[:message]
       }
     end
   end
