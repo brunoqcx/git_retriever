@@ -21,6 +21,7 @@ module Github
         def query_string
           "q=#{q}".tap do |query_string|
             query_string.concat("+language:#{language}") if language
+            query_string.concat("#{query_string}&sort=#{sort}") if sort
             query_string.concat("#{query_string}&order=#{order}") if order
             query_string.concat("#{query_string}&page=#{page}") if page
             query_string.concat("#{query_string}&per_page=#{per_page}") if per_page
