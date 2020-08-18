@@ -1,7 +1,7 @@
 module Api::V1
   class RepositoriesController < ApplicationController
 
-    def search
+    def index
       render json: collection, status: :ok
     end
 
