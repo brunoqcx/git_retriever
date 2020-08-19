@@ -8,7 +8,7 @@ module Github
 
         def initialize(params)
           @params = params
-          @q = @params[:q]
+          @q = @params[:q].to_s
         end
 
         def call
@@ -18,7 +18,7 @@ module Github
         private
 
         def query_string
-          "q=#{q}".tap do |query_string|
+          "q=#{q}".tap do |query_string| #without this default a /search github query breaks
             query_string.concat(generate_search_terms)
             query_string.concat(generate_other_terms)
           end

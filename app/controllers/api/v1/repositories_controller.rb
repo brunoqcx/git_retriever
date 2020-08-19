@@ -8,20 +8,19 @@ module Api::V1
     private
 
     def repositories_response
-      @repositories_response ||= Repositories::ApiSearcher.new(search_params).call
+      @repositories_response ||= Repositories::Searcher.new(search_params).call
     end
 
     def search_params
-      defaulted_params.merge(permited_params)
+      search_defaulted_params.merge(search_permited_params)
     end
 
-    def permited_params
-      params.permit(:sort, :order, :user)
+    def search_permited_params
+      params.permit(:q, :sort, :order, :user)
     end
 
-    def defaulted_params
+    def search_defaulted_params
       {
-        q: params['q'] || nil,
         language: params['language'] || 'ruby',
         page: params['page'] || 1,
         per_page: params['per_page'] || 10
