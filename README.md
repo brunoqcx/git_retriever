@@ -1,24 +1,19 @@
-# README
+# Git Retriever
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This Project uses ruby 2.6 and mysql for DB
 
-Things you may want to cover:
+Running the project:
 
-* Ruby version
+* Clone it
 
-* System dependencies
+* Bundle it
 
-* Configuration
+* rake db:create
 
-* Database creation
+* rake db:migrate
 
-* Database initialization
+* rake rswag:specs:swaggerize for the api documentation
 
-* How to run the test suite
+* rails s
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* got to http://localhost:3000/api-docs for the API use instructions
