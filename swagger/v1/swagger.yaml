@@ -1,0 +1,83 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/repositories":
+    get:
+      summary: Retrieves repositories
+      tags:
+      - Repositories
+      parameters:
+      - name: q
+        in: query
+        required: false
+        description: Textual search
+        schema:
+          type: string
+      - name: language
+        in: query
+        required: false
+        description: Programming language search
+        schema:
+          type: string
+      - name: user
+        in: query
+        required: false
+        description: User login search
+        schema:
+          type: string
+      - name: sort
+        in: query
+        required: false
+        description: Sort option (stars, forks and update are the challenge options)
+        schema:
+          type: string
+      - name: order
+        in: query
+        required: false
+        description: Order criteria, use desc or asc (desc is default)
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: Page for exhibition
+        schema:
+          type: string
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items in page
+        schema:
+          type: string
+      responses:
+        '200':
+          description: repositories found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      properties:
+                        full_name:
+                          type: string
+                        description:
+                          type: string
+                        forks_count:
+                          type: integer
+                        stargazers_countus:
+                          type: integer
+                        owner:
+                          type: string
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000

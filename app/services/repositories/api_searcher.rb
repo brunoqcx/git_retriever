@@ -19,7 +19,7 @@ module Repositories
       OpenStruct.new(
         body: {
           total: response_body[:total_count].to_i,
-          items: items
+          data: data
         },
         status: status
       )
@@ -37,7 +37,7 @@ module Repositories
       @status ||= response.status
     end
 
-    def items
+    def data
       CollectionBuilder.new(response_body[:items]).call
     end
 
