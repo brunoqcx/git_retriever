@@ -9,7 +9,7 @@ gem 'puma', '~> 4.1'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'faraday'
-
+gem 'dotenv-rails'
 gem 'rswag'
 
 group :development, :test do
